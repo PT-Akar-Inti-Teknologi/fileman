@@ -10,7 +10,4 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'CumiController@index');
-
-Auth::routes();
+Route::view('/', 'welcome');
