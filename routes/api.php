@@ -17,5 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('file/{uuid}/download', 'FileController@getFile');
-Route::post('file/upload', 'FileController@postFile');
+Route::middleware('auth:api')->group(function() {
+    Route::get('file/{uuid}/download', 'FileController@getFile');
+    Route::post('file/upload', 'FileController@postFile');
+});
+Route::get('file', 'FileController@index');
