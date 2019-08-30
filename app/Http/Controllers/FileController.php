@@ -7,24 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class FileController extends Controller
 {
-    public function index()
-    {
-        // $data = request()->session()->all();
-        return \Ses;
-        // return 'CUmi';
-        // $file = DB::table('application_files')->select('file_path')->where('uuid', $uuid)->first();
-        // $path = storage_path('app/'.$file->file_path);
-        // // return response()->download($path);
-        // return response()->json(['message'=>$file], 200);
-
-    }
-
     public function getFile($uuid)
     {
         $file = DB::table('application_files')->select('file_path')->where('uuid', $uuid)->first();
         $path = storage_path('app/'.$file->file_path);
         return response()->download($path);
-        // return response()->json(['message'=>$file], 200);
 
     }
 
