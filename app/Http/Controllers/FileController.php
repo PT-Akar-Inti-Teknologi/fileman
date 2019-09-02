@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    public function getFile($uuid)
+    public function getFile()
     {
+        $uuid = $request->input('uuid');
         $file = DB::table('application_files')->select('file_path')->where('uuid', $uuid)->first();
-        $path = storage_path('app/'.$file->file_path);
-        return response()->download($path);
+        $path = storage_path($file->file_path);
+        return Storage::download($path);
+
 
     }
 
@@ -19,10 +22,7 @@ class FileController extends Controller
     {
         $file = $request->file('attachment');
         $folder = $request->input('ApplicationID');
-        $extension = $file->getClientOriginalExtension();
-        $attachment = $request->input('filename').'.'.$extension;
-        $storagepath = $file->move(storage_path('app/attachment/'.$folder.'/'), $attachment);
-        $fileurl = url('/'.$attachment);
-        return response()->json(['url' => $fileurl], 200);
+        $fileurl = Storage::put($folder, $file);
+        return response()->json(['path' => $fileurl, 'message' => 'File uploaded.'], 200);
     }
 }

@@ -12,12 +12,15 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('/', function() {
+    return response()->json(['message' => 'Selamat datang'], 200);
+});
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 
 Route::middleware('auth:api')->group(function() {
-    Route::get('file/{uuid}/download', 'FileController@getFile');
+    Route::get('file/download', 'FileController@getFile');
     Route::post('file/upload', 'FileController@postFile');
 });
