@@ -10,6 +10,4 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-route::get('/', function(){
-    return asset('1111111/gdT0NNx9jIUWyJhmUHlHOoU9QJfiTYhyLRtIT8Al.png');
-});
+route::get('/', function(){});
