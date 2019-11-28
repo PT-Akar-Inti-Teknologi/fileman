@@ -21,5 +21,6 @@ Route::middleware('auth:api')->group(function() {
         return response()->json($request->user());
     });
     Route::get('file/download', 'FileController@getFile');
+    Route::get('file/remove', 'FileController@removeFile');
     Route::post('file/upload', 'FileController@postFile');
 });

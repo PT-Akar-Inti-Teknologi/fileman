@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use App\Models\ApplicationFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,6 +29,20 @@ class FileController extends Controller
             'Content-Type' => mime_content_type($path),
         ];
         return Storage::download($file->path, $name.'.'.$extn, $headers);
+    }
+
+    public function removeFile(Request $request)
+    {
+        $uuid = $request->uuid;
+        $docs = ApplicationFile::where('uuid', '=', $uuid)->first();
+
+        if (file_exists(storage_path('app/public/attachment/'.$docs['file_path'])))
+        {
+            unlink(storage_path('app/public/attachment/'.$docs['file_path']));
+        }
+
+        $docs->delete();
+        return response()->json(['message' => 'success'], 200);
     }
 
     public function postFile(Request $request)
