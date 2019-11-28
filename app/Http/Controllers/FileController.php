@@ -33,8 +33,8 @@ class FileController extends Controller
 
     public function removeFile(Request $request)
     {
-        $uuid = $request->uuid;
-        $docs = ApplicationFile::where('uuid', '=', $uuid)->first();
+        $uuid = $request->id;
+        $docs = ApplicationFile::where('id', '=', $id)->first();
         $docs->delete();
 
         if (file_exists(storage_path('app/public/attachment/'.$docs['file_path'])))
