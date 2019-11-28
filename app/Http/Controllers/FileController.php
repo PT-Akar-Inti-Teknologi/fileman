@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    public function getFile($uuid)
+    public function getFile(Request $request)
     {
+        $uuid = $request->uuid;
         $file = DB::table('application_files as A')
         ->leftjoin('applications as B', 'B.id', '=', 'A.application_id')
         ->where('A.uuid', $uuid)
