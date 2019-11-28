@@ -23,6 +23,7 @@ class FileController extends Controller
         ->first();
         $name = strtoupper($file->customer.' - '.$file->name);
         $extn = pathinfo($file->path, PATHINFO_EXTENSION);
+        $path = storage_path('app/public/attachment/'.$file->path);
         $headers = [
             'Content-Type' => mime_content_type($path),
         ];
