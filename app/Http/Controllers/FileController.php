@@ -35,13 +35,13 @@ class FileController extends Controller
     {
         $uuid = $request->uuid;
         $docs = ApplicationFile::where('uuid', '=', $uuid)->first();
+        $docs->delete();
 
         if (file_exists(storage_path('app/public/attachment/'.$docs['file_path'])))
         {
             unlink(storage_path('app/public/attachment/'.$docs['file_path']));
         }
 
-        $docs->delete();
         return response()->json(['message' => 'success'], 200);
     }
 
