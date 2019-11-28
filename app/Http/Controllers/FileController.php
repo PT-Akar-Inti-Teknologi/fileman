@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -30,9 +31,18 @@ class FileController extends Controller
 
     public function postFile(Request $request)
     {
-        $file = $request->attachment;
-        $folder = $request->ApplicationID;
-        $fileurl = Storage::put($folder, $file);
-        return response()->json(['path' => $fileurl, 'message' => 'File uploaded.'], 200);
+        $dir = $request->ApplicationID;
+        $newImage = $request->file('newImage');
+        $oldImage = $request->oldImage;
+        $filepath = Storage::putFile($dir, $newImage);
+        if($oldImage)
+        {
+            if (file_exists(storage_path('app/public/attachment/'.$oldImage)))
+            {
+                unlink(storage_path('app/public/attachment/'.$oldImage));
+            }
+        }
+        return response()->json(['path' => $filepath, 'message' => 'File uploaded.'], 200);
     }
+
 }

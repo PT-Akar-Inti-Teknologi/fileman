@@ -16,11 +16,10 @@ Route::get('/', function() {
     return response()->json(['message' => 'Selamat datang'], 200);
 });
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return response()->json($request->user());
-});
-
 Route::middleware('auth:api')->group(function() {
+    Route::get('user', function (Request $request) {
+        return response()->json($request->user());
+    });
     Route::get('file/download/{uuid}', 'FileController@getFile');
     Route::post('file/upload', 'FileController@postFile');
 });
