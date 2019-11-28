@@ -33,7 +33,7 @@ class FileController extends Controller
 
     public function removeFile(Request $request)
     {
-        $uuid = $request->id;
+        $id = $request->id;
         $docs = ApplicationFile::where('id', '=', $id)->first();
         $docs->delete();
 
